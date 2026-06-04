@@ -5,6 +5,31 @@ async function getFlohmarktData() {
     //let cardsContainer = document.getElementById("cards");
 
     console.log(data.features);
+
+    let marketData = [];
+
+    for(let market of data.features){
+        let marketObject = {
+            event_id: market.properties.event_id,
+            venue: market.properties.spielstaette,
+            title: market.properties.veranstaltungstitel,
+            link: market.properties.veranstaltungslink,
+            date: market.properties.datum,
+            start_time: market.properties.tartzeit,
+            duration: market.properties.dauer,
+            price: market.properties.preis,
+            address: market.properties.adresse,
+            state: market.properties.ort,
+            longitude: market.geometry.coordinates[0],
+            latitude: market.geometry.coordinates[1],
+            isFavourite: false
+
+        }
+
+        marketData.push(marketObject);
+    }
+
+    console.log(marketData);
 /*
     for(let market of data.features){
         let name = market.properties.veranstaltungstitel;

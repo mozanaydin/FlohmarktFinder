@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frühmarkt - Flohmarkt Finder</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
     <header class="site-header">
@@ -25,10 +26,67 @@
             <p>See all the markets as list below</p>
         </section>
 
-        <section class="market-section">
-            <h2>Upcoming Markets</h2>
-            <div class="card-grid"></div>
+        <section class="browse-filters">
+            <div class="filter-fields">
+                <label class="filter-field filter-field-wide">
+                    <span>Search</span>
+                    <input id="search-filter" class="filter-control" type="search" placeholder="Title, venue or address">
+                </label>
+
+                <label class="filter-field">
+                    <span>Choose date</span>
+                    <input type="date" id="exact-date-filter" class="filter-control">
+                </label>
+
+                <label class="filter-field">
+                    <span>District</span>
+                    <select id="district-filter" class="filter-control">
+                        <option value="all">All districts</option>
+                        <option value="St. Pauli">St. Pauli</option>
+                        <option value="Altona">Altona</option>
+                        <option value="Eimsbüttel">Eimsbüttel</option>
+                        <option value="Hamburg-Mitte">Hamburg-Mitte</option>
+                        <option value="Hamburg-Nord">Hamburg-Nord</option>
+                        <option value="Harburg">Harburg</option>
+                        <option value="Bergedorf">Bergedorf</option>
+                        <option value="Wandsbek">Wandsbek</option>
+                        <option value="Other Hamburg">Other Hamburg</option>
+                    </select>
+                </label>
+
+                <label class="filter-check">
+                    <input id="free-entry-filter" type="checkbox">
+                    <span>Free entry only</span>
+                </label>
+                <label class="filter-check">
+                    <input id="favourite-filter" type="checkbox">
+                    <span>Saved only</span>
+                </label>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-chip filter-chip-active" type="button" data-date-filter="all">All</button>
+                <button class="filter-chip" type="button" data-date-filter="today">Today</button>
+                <button class="filter-chip" type="button" data-date-filter="this-week">This Week</button>
+                <button class="filter-chip" type="button" data-date-filter="weekend">Weekend</button>
+                <button class="filter-chip" type="button" data-date-filter="next-week">Next Week</button>
+                <button class="filter-chip" type="button" data-date-filter="next-30-days">Next 30 Days</button>
+            </div>
         </section>
+
+        <section class="market-section">
+            <div class="market-section-heading">
+                <h2 id="market-list-title">Upcoming Markets</h2>
+                <p id="market-result-count" class="market-result-count"></p>
+            </div>
+            <p id="browse-status" class="status-message">Loading Hamburg flea markets...</p>
+            <div id="market-list" class="card-grid"></div>
+            <div id="browse-empty-state" class="empty-state" hidden>
+                <h3>No markets match these filters</h3>
+                <p>Try another date, district or search term.</p>
+            </div>
+        </section>
+        <section id="browse-market-detail" class="detail-section"></section>
     </main>
 
     <footer class="site-footer">
@@ -37,5 +95,6 @@
 
     <script src="js/ui.js"></script>
     <script src="js/api.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </body>
 </html>
