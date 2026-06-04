@@ -15,9 +15,9 @@ body {
     min-height: 100vh;
 }
 
-button, input, select {
+/* button, input, select {
     font: inherit;
-}
+} */
 
 .site-header {
     border-bottom: 2px solid #152238;
@@ -35,21 +35,21 @@ button, input, select {
 
 .site-title {
     color: #b3212d;
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     font-weight: 800;
     text-decoration: none;
 }
 
 .site-nav {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
 .site-nav-link {
     border: 1px solid #152238;
-    border-radius: 40px;
+    border-radius: 20px;
     color: #152238;
-    font-weight: 700;
+    font-weight: 800;
     padding: 8px 14px;
     text-decoration: none;
 }
@@ -71,16 +71,30 @@ button, input, select {
     max-width: 680px;
 }
 
-.market-section {
-    margin-top: 40px;
+.eyebrow {
+    color: #b3212d;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0 0 16px;
+}
+
+p {
+    margin: 0 0 16px;
 }
 
 .browse-filters {
     border-bottom: 2px solid #152238;
     border-top: 2px solid #152238;
-    display: grid;
-    gap: 24px;
-    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 30px;
     padding: 25px 0;
 }
 
@@ -88,12 +102,22 @@ button, input, select {
     display: grid;
     gap: 20px;
     align-items: end;
-    grid-template-columns: 4fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 1fr 1fr auto auto;
 }
 
 .filter-field {
-    display: grid;
-    gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-control {
+    border: 2px solid #152238;
+    border-radius: 6px;
+    background: #fff8ed;
+    color: #152238;
+    min-height: 44px;
+    padding: 9px 12px;
 }
 
 .filter-check {
@@ -107,44 +131,47 @@ button, input, select {
     width: 20px;
 }
 
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .filter-chip {
     border: 2px solid #152238;
     border-radius: 5px;
     color: #152238;
+    background-color: #fff8ed;
     cursor: pointer;
+    font-weight: 800;
     padding: 7px 12px;
 }
 
 .filter-chip:hover,
-.filter-chip--active {
+.filter-chip-active {
     color: #fff8ed; 
     background-color: #0e2f56;
+}
+
+.market-section {
+    margin-top: 40px;
 }
 
 .market-section-heading {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 10px;
 }
 
-.eyebrow {
-    color: #b3212d;
-    font-size: 0.85rem;
+.market-result-count {
+    color: #4a5363;
     font-weight: 800;
-    letter-spacing: 0.08em;
-    margin: 0 0 10px;
 }
 
-h1 {
-    font-size: 3.25rem;
-    margin: 0 0 16px;
-}
-
-p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0 0 16px;
+.card-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .site-footer {

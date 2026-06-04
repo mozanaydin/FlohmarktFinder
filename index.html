@@ -20,7 +20,7 @@
     </header>
 
     <main class="page-shell">
-        <section id="cards" class="page-intro">
+        <section class="page-intro">
             <p class="eyebrow">BROWSE</p>
             <h1>Flohmarkts</h1>
             <p>See all the markets as list below</p>
@@ -28,7 +28,7 @@
 
         <section class="browse-filters">
             <div class="filter-fields">
-                <label class="filter-field filter-field-wide">
+                <label class="filter-field">
                     <span>Search</span>
                     <input id="search-filter" class="filter-control" type="search" placeholder="Title, venue or address">
                 </label>
@@ -65,28 +65,22 @@
             </div>
 
             <div class="filter-bar">
-                <button class="filter-chip filter-chip-active" type="button" data-date-filter="all">All</button>
-                <button class="filter-chip" type="button" data-date-filter="today">Today</button>
-                <button class="filter-chip" type="button" data-date-filter="this-week">This Week</button>
-                <button class="filter-chip" type="button" data-date-filter="weekend">Weekend</button>
-                <button class="filter-chip" type="button" data-date-filter="next-week">Next Week</button>
-                <button class="filter-chip" type="button" data-date-filter="next-30-days">Next 30 Days</button>
+                <button class="filter-chip filter-chip-active" type="button">All</button>
+                <button class="filter-chip" type="button">Today</button>
+                <button class="filter-chip" type="button">This Week</button>
+                <button class="filter-chip" type="button">Weekend</button>
+                <button class="filter-chip" type="button">Next Week</button>
+                <button class="filter-chip" type="button">Next 30 Days</button>
             </div>
         </section>
 
         <section class="market-section">
             <div class="market-section-heading">
                 <h2 id="market-list-title">Upcoming Markets</h2>
-                <p id="market-result-count" class="market-result-count"></p>
+                <p id="market-result-count" class="market-result-count">63 Items</p>
             </div>
-            <p id="browse-status" class="status-message">Loading Hamburg flea markets...</p>
             <div id="market-list" class="card-grid"></div>
-            <div id="browse-empty-state" class="empty-state" hidden>
-                <h3>No markets match these filters</h3>
-                <p>Try another date, district or search term.</p>
-            </div>
         </section>
-        <section id="browse-market-detail" class="detail-section"></section>
     </main>
 
     <footer class="site-footer">
