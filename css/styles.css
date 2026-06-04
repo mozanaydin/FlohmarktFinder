@@ -1,0 +1,108 @@
+:root {
+    color: #152238;
+    background-color: #f7f1e7;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+.site-header {
+    border-bottom: 2px solid #152238;
+    background-color: #fff8ed;
+}
+
+.site-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 18px 0;
+    width: 1080px;
+}
+
+.site-title {
+    color: #b3212d;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.site-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.site-nav-link {
+    border: 1px solid #152238;
+    border-radius: 40px;
+    color: #152238;
+    font-weight: 700;
+    padding: 8px 14px;
+    text-decoration: none;
+}
+
+.site-nav-link-active,
+.site-nav-link:hover {
+    background: #152238;
+    color: #fff8ed;
+}
+
+.page-shell {
+    flex: 1;
+    margin: 0 auto;
+    padding: 48px 0;
+    width: 1080px;
+}
+
+.page-intro {
+    max-width: 680px;
+}
+
+.market-section {
+    margin-top: 40px;
+}
+
+.eyebrow {
+    color: #b3212d;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 10px;
+}
+
+h1 {
+    font-size: 3.25rem;
+    margin: 0 0 16px;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 16px;
+}
+
+.site-footer {
+    width: 1080px;
+    margin: auto auto 0;
+    padding: 24px 0;
+    color: #4a5363;
+}
+
+.cardElement {
+    border: solid 2px black;
+    padding: 10px;
+    margin-bottom: 20px;
+}
