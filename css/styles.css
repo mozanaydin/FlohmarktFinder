@@ -181,12 +181,15 @@ p {
     color: #4a5363;
 }
 
-.cardElement {
-    border: solid 2px black;
-    padding: 10px;
-    margin-bottom: 20px;
+.badge {
+    display: flex;
+    align-items: center;
+    border: 2px solid #152238;
+    border-radius: 6px;
+    padding: 5px 10px;
 }
 
-#map { 
+
+.market-map { 
     height: 400px; 
 }

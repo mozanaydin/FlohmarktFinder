@@ -22,9 +22,11 @@
     <main class="page-shell">
         <section class="page-intro">
             <p class="eyebrow">MAP</p>
-            <h1>See in map</h1>
+            <h1>Markets across Hamburg</h1>
+            <p>Select a pin to see market details.</p>
         </section>
-        <div id="map"></div>
+        <div id="market-map" class="market-map"></div>
+        <section id="map-market-detail"></section>
     </main>
 
     <footer class="site-footer">
@@ -34,10 +36,11 @@
     <script src="js/api.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
-        var map = L.map('map').setView([53.57, 10], 11.5); 
+        var map = L.map('market-map').setView([53.57, 10], 11.5); 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
     </script>
+    <script src="js/map.js"></script>
 </body>
 </html>
