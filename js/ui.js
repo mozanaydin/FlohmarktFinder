@@ -80,18 +80,20 @@ function renderMarketCards(container, markets) {
 }
 
 async function showMarketCards(){
-
-    let marketData = await getFlohmarktData();
     let cardDiv = document.getElementById("market-list");
+    let markets = await getFlohmarkts();
+    let searchBox = document.getElementById("search-filter");
+    searchBox.addEventListener("input", function() {
+        let searchText = searchBox.value.toLowerCase();
 
-    let searchText = document.getElementById("search-filter");
+        let filteredMarkets = markets.filter(function(market) {
+            return market.title.toLowerCase().includes(searchText);
+        });
 
-    if(!searchText.value){
-        renderMarketCards(cardDiv, marketData);
-    }else{
-        let filteredData = marketData.filter(item => item.title.includes(searchText.value));
-        renderMarketCards(cardDiv, filteredData);
-    }
+        renderMarketCards(cardDiv, filteredMarkets);
+    });
+
+    renderMarketCards(cardDiv, markets);
 }
 
 showMarketCards();
