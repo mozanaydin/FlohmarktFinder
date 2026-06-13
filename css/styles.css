@@ -182,14 +182,181 @@ p {
 }
 
 .badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     border: 2px solid #152238;
     border-radius: 6px;
+    font-weight: 900;
+    justify-content: center;
     padding: 5px 10px;
+}
+
+.badge-paid {
+    background-color: #d8a441;
+    color: #152238;
+}
+
+.badge-free {
+    background-color: #39745d;
+    color: #fff8ed;
+}
+
+.badge-date {
+    background-color: #0e2f56;
+    color: #fff8ed;
+}
+
+.card {
+    border: 2px solid #152238;
+    border-radius: 6px;
+    background-color: #fff8ed;
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.card-media {
+    aspect-ratio: 16/10;
+    background-color: #0e2f56;
+}
+
+.market-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.market-card-body {
+    display: grid;
+    flex: 1;
+    gap: 10px;
+    overflow-wrap: anywhere;
+}
+
+.market-card-summary {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    min-width: 0;
+}
+
+.market-card-media {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 14px;
+    position: relative;
+}
+
+.market-card-media .badge {
+    position: relative;
+    z-index: 1;
+}
+
+.market-card-image {
+    height: 100%;
+    width: 100%;
+    inset: 0;
+    object-fit: cover;
+    position: absolute;
+}
+
+.market-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a5363;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.market-card-venue, .market-card-address, .market-card-time {
+    margin: 0;
+}
+
+.market-card-venue {
+    font-weight: 800;
+}
+
+.market-card-address {
+    color: #4a5363;
+}
+
+.market-card-time {
+    color: #0e2f56;
+    font-weight: 900;
+}
+
+.market-card-actions {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 8px;
+}
+
+.button {
+    align-items: center;
+    border: 2px solid #152238;
+    border-radius: 6px;
+    background-color: #b3212d;
+    color: #fff8ed;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+.market-card-actions .button {
+    font-size: 0.9rem;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.button-secondary {
+    background-color: #152238;
+    color: #fff8ed;
 }
 
 
 .market-map { 
-    height: 400px; 
+    border: 2px solid #152238;
+    border-radius: 8px;
+    height: 560px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.view-detail {
+    text-decoration: none;
+}
+
+.status-message {
+    color: #4a5363;
+    font-weight: 700;
+}
+
+.market-detail {
+    border-top: 2px solid #152238;
+    margin-top: 42px;
+    overflow-wrap: anywhere;
+    padding-top: 28px;
+}
+
+.market-detail-header {
+    display: flex;
+    align-items: start;
+    gap: 24px;
+    justify-content: space-between;
+}
+
+.market-detail-actions {
+    display: grid;
+    flex: 0 0 auto;
+    gap: 8px;
 }

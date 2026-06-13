@@ -1,5 +1,3 @@
-
-
 //decide if the entry is free or not
 function getEntryType(priceText){
     let price = priceText ? priceText.toLowerCase() : "";
@@ -32,80 +30,7 @@ function calculateEndTime(startTime, duration){
     return endHoursText + ":" + endMinutesText;
 }
 
-function formatDate(dateString){
-
-    let date = new Date(dateString);
-
-    let formattedDate = date.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-    });
-
-    return formattedDate;
-}
-
-function makeUpcomingDate(market){
-    return {
-        id: market.id,
-        date: market.date,
-        startTime: market.startTime,
-        duration: market.duration,
-        endTime: market.endTime,
-        priceText: market.priceText,
-        entryType: market.entryType,
-        eventLink: market.eventLink
-    };
-}
-
-/*
-function groupMarkets(markets){
-    let groups = [];
-
-    for(let i=0;i<markets.length;i++){
-        let group = null;
-
-        for(let j=0;j<groups.length;j++){
-            if(groups[j].title === markets[i].title){
-                group = groups[j];
-                break;
-            }
-        }
-
-        if(!group){
-            group = {
-                id: market[i].title,
-                title: market[i].title,
-                venue: market[i].venue,
-                address: market[i].address,
-                coordinates: market[i].coordinates,
-                nextDate: market[i].date,
-                upcomingDates: [],
-                eventLink: market[i].eventLink
-            };
-            groups.push(group);
-        }
-
-        group.upcomingDates.push(makeUpcomingDate(market[i]));
-    }
-
-    for(let i=0;i<groups.length;i++){
-        groups[i].upcomingDates.sort(function (firstDate,secondDate) {
-            return firstDate.date.localeCompare(secondDate.date);
-        });
-
-        if(groups[i].upcomingDates.length>0) {
-            groups[i].nextDate = groups[i].upcomingDates[0].date;
-            groups[i].eventLink = groups[i].upcomingDates[0].eventLink;
-        }
-    }
-
-    return groups;
-}
-
-*/
-
-async function getFlohmarktData() {
+async function getFlohmarkts() {
     let FlohmarktAPI = "https://api.hamburg.de/datasets/v1/mrh_veranstaltungsdaten/collections/spielstaetten_mit_veranstaltungen_6_wochen/items?f=json&limit=1000&bundesland=Hamburg&kategorie=M%C3%A4rkte&unterkategorie=Flohm%C3%A4rkte";
 
     let response = await fetch(FlohmarktAPI);
@@ -120,12 +45,12 @@ async function getFlohmarktData() {
             venueId: properties.spielstaette_id,
             venue: properties.spielstaette,
             title: properties.veranstaltungstitel,
-            address: properties.adresse + ", " + properties.ort,
+            address: properties.adresse && properties.ort ? properties.adresse + ", " + properties.ort : properties.adresse || properties.ort,
             date: properties.datum,
             startTime: properties.startzeit.replace(" Uhr", ""),
-            duration: properties.dauer.replace(" h", "") || "",
+            duration: properties.dauer ? properties.dauer.replace(" h", "") : "",
             endTime: properties.dauer ? calculateEndTime(properties.startzeit, properties.dauer) : "",
-            priceText: properties.preis,
+            priceText: properties.preis ? properties.preis : "",
             entryType: getEntryType(properties.preis),
             coordinates: {
                 longitude: geometry.coordinates[0],
@@ -166,15 +91,20 @@ async function getWeatherForecast(){
     return weatherData;
 }
 
-async function debugData() {
+/*
+async function filterData() {
     await getFlohmarktData();
     await getWeatherForecast();
 }
+*/
 
-debugData();
+//filterData();
 
 /*IIFE = Immediately Invoked Function Expression ==> It creates a function and runs it immediately. The variables cannot be used out of the function though.
 (function(){
 
 })();
 */
+
+
+

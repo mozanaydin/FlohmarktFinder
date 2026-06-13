@@ -1,84 +1,97 @@
-function formatTimeInterval(occurrence){
-    if(!occurrence.endTime){
-        return occurrence.startTime;
-    }else{
-        return occurrence.startTime + "-" + occurrence.endTime;
-    }
+function formatTimeInterval(market){
+    return !market.endTime ? market.startTime : market.startTime + "-" + market.endTime;
 }
 
-function getPriceBadge(occurrence){
-    if(occurrence.entryType === "paid"){
+function formatDate(dateString){
+    let date = new Date(dateString);
+    let formattedDate = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+    return formattedDate;
+}
+
+function getPriceBadge(market){
+    if(market.entryType === "paid"){
         return '<span class="badge badge-paid">Paid</span>';
     }else{
         return '<span class="badge badge-free">Free Entry</span>';
     }
 }
 
-function groupTitleAndDate(market){
-    let allGroupedData = {
-        title: [],
-        date: [],
-        upcoming: []
-    };
-    for(let i=0;i<market.length;i++){
-        allGroupedData.title.push(market[i].title);
-        allGroupedData.date.push(market[i].date);
+function getMarketImagePath(title){
+    let imageName = "";
+
+    if(title !== null && title !== undefined){
+        imageName = String(title);
     }
 
-    //"Set" is the way to get unique names out of the array. like distinct in sql. 
-    let uniqueTitles = [...new Set(allGroupedData.title)];
-    let uniqueTitleDates = [];
-    let uniqueUpcomingCount = [];
-
-    for(let i=0;i<uniqueTitles.length;i++){
-        uniqueTitleDates[i] = [];
-        uniqueUpcomingCount[i] = 0;
-        for(let j=0;j<allGroupedData.title.length;j++){ 
-            if(allGroupedData.title[j] === uniqueTitles[i]){
-                uniqueTitleDates[i].push(allGroupedData.date[j]);
-                uniqueUpcomingCount[i]++;
-            }
-        }
+    if(!imageName){
+        imageName = "default-flohmarkt";
     }
 
-    return {
-        title: uniqueTitles,
-        date: uniqueTitleDates,
-        upcoming: uniqueUpcomingCount
-    };
+    return "images/" + imageName + ".png"; 
 }
 
 function createMarketCardHtml(market){
-    let occurrence = [0];
     let title = market.title;
     let venue = market.venue;
     let address = market.address;
+    let eventLink = market.eventLink;
+    let date = market.date;
     //let imagePath = getMarketImagePath(market.title);
-    let favouriteClass = isFavourite ? " market-card--favouriteactive" : "";
-    let favouriteText = isFavourite ? "Saved" : "Favourite";
 
     return `
-        <article class=""card market-card">
-            <div class=""market-card-summary">
+        <article class="card market-card">
+            <div class="market-card-summary">
                 <div class="card-media market-card-media">
-                    <img class="market-card-image" src="${imagePath}" alt="${title}">
-                    <span class="badge badge-date">${occurrence.date}</span>
+                    <img class="market-card-image" src="images/flohmarkt-image.png" alt="${title}">
+                    <span class="badge badge-date">${formatDate(date)}</span>
                 </div>
                 <div class="card-body market-card-body">
                     <div class="market-card-meta">
-                        ${getPriceBadge(occurrence)}
-                        <span>${getUpcomingCountLabel(market)}</span>
+                        ${getPriceBadge(market)}
                     </div>
                     <h3>${title}</h3>
                     <p class="market-card-venue>${venue}</p>
                     <p class="market-card-address">${address}</p>
                     <p class="market-card-time>${formatTimeInterval(market)}</p>
                     <div class="market-card-actions">
-                        <button class="button button-secondary" type="button">View Details</button>
-                        <button class="button button-secondary${favouriteClass}" type="button">${favouriteText}</button>
+                        <a class="view-detail" href="${eventLink}" target="_blank">
+                            <button class="button button-secondary" type="button">View Details</button>
+                        </a>
                     </div>
                 </div>
             </div>
         </article>
-        `;
+    `;
 }
+
+
+function renderMarketCards(container, markets) {
+    let cardsHtml = "";
+
+    for(let i=0;i<markets.length;i++){
+        cardsHtml = cardsHtml + createMarketCardHtml(markets[i]);
+    }
+
+    container.innerHTML = cardsHtml;
+}
+
+async function showMarketCards(){
+
+    let marketData = await getFlohmarktData();
+    let cardDiv = document.getElementById("market-list");
+
+    let searchText = document.getElementById("search-filter");
+
+    if(!searchText.value){
+        renderMarketCards(cardDiv, marketData);
+    }else{
+        let filteredData = marketData.filter(item => item.title.includes(searchText.value));
+        renderMarketCards(cardDiv, filteredData);
+    }
+}
+
+showMarketCards();
