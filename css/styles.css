@@ -15,10 +15,6 @@ body {
     min-height: 100vh;
 }
 
-/* button, input, select {
-    font: inherit;
-} */
-
 .site-header {
     border-bottom: 2px solid #152238;
     background-color: #fff8ed;
@@ -229,7 +225,8 @@ p {
 }
 
 .market-card-body {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     gap: 10px;
     overflow-wrap: anywhere;
@@ -237,8 +234,8 @@ p {
 
 .market-card-summary {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    align-self: start;
     min-width: 0;
 }
 
@@ -274,28 +271,36 @@ p {
     font-weight: 700;
 }
 
-.market-card-venue, .market-card-address, .market-card-time {
+.market-card-venue, .market-card-address, .market-card-time, .market-card-title {
     margin: 0;
 }
 
+.market-card-title {
+    margin-top: 15px;
+    min-height: 4.5rem;
+}
+
 .market-card-venue {
+    min-height: 3rem;
     font-weight: 800;
 }
 
 .market-card-address {
     color: #4a5363;
+    min-height: 3rem;
 }
 
 .market-card-time {
     color: #0e2f56;
     font-weight: 900;
+    min-height: 1.5rem;
 }
 
 .market-card-actions {
     display: grid;
     gap: 8px;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 8px;
+    grid-template-columns: 1fr;
+    margin-top: auto;
 }
 
 .button {

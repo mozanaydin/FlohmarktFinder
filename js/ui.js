@@ -1,3 +1,12 @@
+let searchInput = document.getElementById("search-filter");
+let exactDateInput = document.getElementById("exact-date-filter");
+let districtSelect = document.getElementById("district-filter");
+let freeEntryCheckbox = document.getElementById("free-entry-filter");
+let filterChips = document.querySelectorAll(".filter-chip");
+
+let activeDateFilter = "All";
+let allMarkets = [];
+
 function formatTimeInterval(market){
     return !market.endTime ? market.startTime : market.startTime + "-" + market.endTime;
 }
@@ -53,10 +62,10 @@ function createMarketCardHtml(market){
                     <div class="market-card-meta">
                         ${getPriceBadge(market)}
                     </div>
-                    <h3>${title}</h3>
-                    <p class="market-card-venue>${venue}</p>
+                    <h3 class="market-card-title">${title}</h3>
+                    <p class="market-card-venue">${venue}</p>
                     <p class="market-card-address">${address}</p>
-                    <p class="market-card-time>${formatTimeInterval(market)}</p>
+                    <p class="market-card-time">${formatTimeInterval(market)}</p>
                     <div class="market-card-actions">
                         <a class="view-detail" href="${eventLink}" target="_blank">
                             <button class="button button-secondary" type="button">View Details</button>
@@ -68,9 +77,9 @@ function createMarketCardHtml(market){
     `;
 }
 
-
-function renderMarketCards(container, markets) {
+function renderMarketCards(markets) {
     let cardsHtml = "";
+    let container = document.getElementById("market-list");
 
     for(let i=0;i<markets.length;i++){
         cardsHtml = cardsHtml + createMarketCardHtml(markets[i]);
@@ -79,10 +88,100 @@ function renderMarketCards(container, markets) {
     container.innerHTML = cardsHtml;
 }
 
+function matchesDateRange(marketDateString, filterType) {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let marketDate = new Date(marketDateString);
+    marketDate.setHours(0, 0, 0, 0);
+
+    if (filterType === "All") {
+        return true;
+    }
+
+    if (filterType === "Today") {
+        return marketDate.getTime() === today.getTime();
+    }
+
+    if (filterType === "This Week") {
+        let endOfWeek = new Date(today);
+        endOfWeek.setDate(today.getDate() + 7);
+
+        return marketDate >= today && marketDate <= endOfWeek;
+    }
+
+    if (filterType === "Weekend") {
+        let day = marketDate.getDay();
+
+        return day === 6 || day === 0;
+    }
+
+    if (filterType === "Next Week") {
+        let startNextWeek = new Date(today);
+        startNextWeek.setDate(today.getDate() + 7);
+
+        let endNextWeek = new Date(today);
+        endNextWeek.setDate(today.getDate() + 14);
+
+        return marketDate >= startNextWeek && marketDate <= endNextWeek;
+    }
+
+    if (filterType === "Next 30 Days") {
+        let next30Days = new Date(today);
+        next30Days.setDate(today.getDate() + 30);
+
+        return marketDate >= today && marketDate <= next30Days;
+    }
+
+    return true;
+}
+
+function applyFilters(){
+    let searchText = searchInput.value.toLowerCase();
+    let exactDate = exactDateInput.value;
+    let selectedDistrict = districtSelect.value;
+    let freeOnly = freeEntryCheckbox.checked;
+    let filteredMarkets = allMarkets.filter(function(market) {
+        let title = market.title ? market.title.toLowerCase() : "";
+        let venue = market.venue ? market.venue.toLowerCase() : "";
+        let address = market.address ? market.address.toLowerCase() : "";
+        let matchesSearch = title.includes(searchText) || venue.includes(searchText) || address.includes(searchText);
+        let matchesExactDate = exactDate === "" || market.date === exactDate;
+        let matchesDistrict = selectedDistrict === "all" || market.district === selectedDistrict;
+        let matchesFreeEntry = !freeOnly || market.entryType === "FREE";
+        let matchesDateChip = exactDate !== "" || matchesDateRange(market.date, activeDateFilter);
+        return (matchesSearch && matchesExactDate && matchesDistrict && matchesFreeEntry && matchesDateChip);
+    });
+    renderMarketCards(filteredMarkets);
+}
+
+async function initBrowsePage(){
+    allMarkets = await getFlohmarkts();
+    renderMarketCards(allMarkets);
+
+    searchInput.addEventListener("input", applyFilters);
+    exactDateInput.addEventListener("change", applyFilters);
+    districtSelect.addEventListener("change", applyFilters);
+    freeEntryCheckbox.addEventListener("change", applyFilters);
+
+    filterChips.forEach(function(chip) {
+        chip.addEventListener("click", function() {
+            filterChips.forEach(function(button) {
+                button.classList.remove("filter-chip-active");
+            });
+
+            chip.classList.add("filter-chip-active");
+            activeDateFilter = chip.textContent;
+            exactDateInput.value= "";
+            applyFilters();
+        });
+    });
+}
+
+/*
 async function showMarketCards(){
     let cardDiv = document.getElementById("market-list");
     let markets = await getFlohmarkts();
-    let searchBox = document.getElementById("search-filter");
     searchBox.addEventListener("input", function() {
         let searchText = searchBox.value.toLowerCase();
 
@@ -97,3 +196,7 @@ async function showMarketCards(){
 }
 
 showMarketCards();
+
+*/
+
+initBrowsePage();

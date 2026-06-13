@@ -90,21 +90,3 @@ async function getWeatherForecast(){
     console.log(weatherData);
     return weatherData;
 }
-
-/*
-async function filterData() {
-    await getFlohmarktData();
-    await getWeatherForecast();
-}
-*/
-
-//filterData();
-
-/*IIFE = Immediately Invoked Function Expression ==> It creates a function and runs it immediately. The variables cannot be used out of the function though.
-(function(){
-
-})();
-*/
-
-
-
